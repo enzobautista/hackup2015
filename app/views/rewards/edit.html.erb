@@ -1,0 +1,11 @@
+<h1>Editing <%= @reward.title %> of <%= @reward.project.title %></h1>
+
+<%= simple_form_for [@project,@reward] do |f| %>
+<div class="col-md-8">
+<%= f.input :title  %>
+<%= f.input :details  %>
+<%= f.input :minimum_amount  %>
+<%= f.button :submit %>
+
+<% end %>
+</div>

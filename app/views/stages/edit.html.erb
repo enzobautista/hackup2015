@@ -1,0 +1,14 @@
+<h1>Editing <%= @stage.name %> of <%= @stage.project.title %></h1>
+
+<%= simple_form_for [@project,@stage] do |f| %>
+<div class="col-md-8">
+<%= f.input :name  %>
+<%= f.input :amount  %>
+<%= f.input :deadline  %>
+<%= f.button :submit %>
+<!-- 	<center>
+	<%= f.file_field :photo %>
+	<%= f.button :submit, "Add Outfit", :class => 'thebutton'%>
+	</center> -->
+<% end %>
+</div>

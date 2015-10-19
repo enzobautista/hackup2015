@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obra</title>
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,400italic,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <nav class="navbar2">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" style="padding:0;margin-left: 30px;"><img src="assets/obra_logo-word-only.png" style="width:200px;"/></a>
+    </div/>
+  <div class="container-fluid">
+    <ul class="nav navbar-nav mynav">
+       <li><%=link_to('DISCOVER', projects_path) %></li>
+       <li><a href="#">SUBMIT</a></li>
+       <% if user_signed_in? %>
+       <li><%= link_to "LOG OUT", destroy_user_session_path, method: :delete  %></li>
+       <%else%>
+       <li>
+        <%= link_to('LOG IN', new_user_session_path)  %>  
+        </li>
+       <%end%>
+    </ul>
+  </div>
+  </nav>
+  <section class="projects">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="sort">
+            <li class="sort-title">Sort by:</li>
+            <li class="sort-cat"><a>Popularity</a></li>
+            <li class="sort-cat"><a>Date Added</a></li>
+            <li class="sort-cat"><a>End Date</a></li>
+            <li class="sort-cat"><a>Nearest to Goal</a></li>
+          </ul>
+
+          <ul class="filter">
+            <li class="sort-title">Filter by stage:</li>
+            <li class="filter-cat"><a><img src="assets/hackup-ui_ic-1.png" style="width:35px;"></img>IDEATION</a></li>
+            <li class="filter-cat"><a><img src="assets/hackup-ui_ic-2.png" style="width:35px;"></img>PRE-PRODUCTION</a></li>
+            <li class="filter-cat"><a><img src="assets/hackup-ui_ic-3.png" style="width:35px;"></img>PRODUCTION</a></li>
+            <li class="filter-cat"><a><img src="assets/hackup-ui_ic-4.png" style="width:35px;"></img>DISTRIBUTION</a></li>
+          </ul>
+          <ul class="filter"></ul>
+        </div>
+        <div class="col-md-9">
+          <div class="marg-cont1 grid">
+      <div class="row marg-row">
+        <%@projects.each do |project| %>
+        <div class="col-xs-4">
+            <div class="card1 grid-item">
+            <img src="assets/img_preview3.jpg" class="img-responsive">
+            <div class="inner">
+                  <b> <%= link_to project.title, project,:class=>"prj-title" %> </b> <br>
+                  <%= truncate(project.summary, length:60) %> <br>
+                  <b>PHP <%= sprintf('%.2f',project.current_amount) %> </b>
+                  <span style="float:right;"><%=(((project.current_amount.to_f)/(project.goal).to_f)*100).to_i%>% </span>
+                 <ul class="graph">
+                          <li>
+                            <span class="cans" style="width:<%=(((project.current_amount.to_f)/(project.goal).to_f)*100)%>%">
+                            </span>
+                           </li>
+                  </ul>
+
+                 </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  
+  </section>
+  
+  <footer class="site-footer" style="position:absolute;bottom:-100;">
+    <span style="color: #fff;font-size: 15px;">
+    <a>About Us</a> | <a>Terms and Conditions</a> | Copyright 2015
+    </span>
+  </footer> 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="assets/bootstrap.min.js"></script>
+
+    <script src="assets/isotope.pkgd.min.js"></script>
+    <script>
+        $(window).load(function() {
+          $('.grid').isotope({
+            // options
+            animationEngine: 'best-available',
+            itemSelector : '.grid',
+            layoutMode : 'fitRows'
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

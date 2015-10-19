@@ -1,0 +1,20 @@
+<section id="belowNav" class="u_log">
+  <div class="container marg-cont">
+  <div class="col-md-4"></div>
+    <div class="card col-md-4 log_form">
+      <h1>Write Review</h1>
+    <%=simple_form_for([@project, @review]) do |f| %>
+
+    <%= f.input :comment%>
+    <%= f.input :rating%>
+      <div class="field hide">
+      <%= f.label :project_id, "project id" %><br>
+      
+      <%= f.text_field :project_id, :value=>@project.id,readonly:true %>
+    </div>
+    <hr>
+    <%= f.submit :save %>
+    <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<nav class="navbar2">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" style="padding:0;margin-left: 30px;"><img src="../../../assets/obra_logo-word-only.png" style="width:200px;"/></a>
+    </div/>
+  <div class="container-fluid">
+    <ul class="nav navbar-nav mynav">
+       <li><%=link_to('DISCOVER', projects_path) %></li>
+       <li><a href="#">SUBMIT</a></li>
+       <% if user_signed_in? %>
+       <li><%= link_to "LOG OUT", destroy_user_session_path, method: :delete  %></li>
+       <%else%>
+       <li>
+        <%= link_to('LOG IN', new_user_session_path)  %>  
+        </li>
+       <%end%>
+    </ul>
+  </div>
+  </nav>
+    <section class="home" style="height: 100vh;">
+    <div style="width:600px;margin-left:auto;margin-right:auto;padding-top: 150px;">
+   <div class="card log_form" style="text-align:center;">
+        <h1>Fund <%= @project.title %></h1>
+      <%=simple_form_for([@project, @backing]) do |f| %>
+      <div style="height:30px;"></div>
+      <%= f.input :amount%>
+      <div class="field hide">
+        <%= f.label :project_id, "project id" %><br>
+        
+        <%= f.text_field :project_id, :value=>@project.id,readonly:true %>
+      </div>
+      <hr>
+      <%= f.submit :Pledge,  :class=>"btn contribute btncont"%>
+      <% end %>
+      </div>
+  </div>
+  </section>
+  <footer class="site-footer">
+    <span style="color: #fff;font-size: 15px;">
+    <a>About Us</a> | <a>Terms and Conditions</a> | Copyright 2015
+    </span>
+  </footer> 

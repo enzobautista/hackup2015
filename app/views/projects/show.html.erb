@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obra</title>
+</head>
+<body>
+  <nav class="navbar2">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" style="padding:0;margin-left: 30px;"><img src="../assets/obra_logo-word-only.png" style="width:200px;"/></a>
+    </div/>
+  <div class="container-fluid">
+    <ul class="nav navbar-nav mynav">
+       <li><%=link_to('DISCOVER', projects_path) %></li>
+       <li><a href="#">SUBMIT</a></li>
+       <% if user_signed_in? %>
+       <li><%= link_to "LOG OUT", destroy_user_session_path, method: :delete  %></li>
+       <%else%>
+       <li>
+        <%= link_to('LOG IN', new_user_session_path)  %>  
+        </li>
+       <%end%>
+    </ul>
+  </div>
+  </nav>
+
+  <section class="product">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <img src="../assets/hackup-ui_sample-pic.jpg" style="width:100%;" />
+          <div class="description">
+            <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#story" aria-controls="story" role="tab" data-toggle="tab">Story</a></li>
+            <li><a href="#updates" aria-controls="updates" role="tab" data-toggle="tab"><% if (@project.stage_id == nil) then %>
+          Stages
+        <% else %>
+         <%= @project.stage.name %>
+        <% end %></a></li>
+            <li><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
+            </ul>
+            <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="story">
+              <p class="desc-head">Summary</p>
+              <p class="desc-body"><%=@project.summary %></p>
+              <p class="desc-head">Cast and Crew</p>
+              <br/>
+              <br/>
+              <br/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="updates">
+            <% @project.stages.each do |stage| %>
+              <span class="rev-name"><%= stage.name %></span>
+              <span class="rev-rate"><%= sprintf('%.2f',stage.amount) %></span><br>
+              <p class="rev-com"><%= stage.deadline %></p>
+              <hr style="height:0.5px;background:#000;opacity:0.7;">
+            <% end %>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="reviews">
+            <% @project.reviews.each do |review| %>
+              <span class="rev-name"><%= review.user.name %></span>
+              <span class="rev-rate"><%= review.rating %></span><br>
+              <p class="rev-com"><%= review.comment %></p>
+              <hr style="height:1px;background:#000;opacity:0.7;">
+            <% end %>
+            <div style="width: 150px;margin-left:auto;margin-right:auto;">
+            <%= link_to('Review', new_project_review_path(@project.id), :class=>"btn contribute1 btncont1" )  %>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5" style="padding-left:30px;">
+          <div class="back-info">
+            <p style="font-size:40px;color:#a12821;"><%=@project.title%></p>
+            <p class="back-data">120</p>
+            <p class="back-label">backers</p>
+            <p class="back-data">P<%=sprintf('%.2f',@project.current_amount)%></p>
+            <p class="back-label">pledged out of <span class="back-highlight">P<%=sprintf('%.2f',@project.goal)%></span></p>
+            <p class="back-data">45</p>
+            <p class="back-label">days to go</p>
+             <%= link_to('CONTRIBUTE', new_project_backing_path(@project.id), :class=>"btn contribute btncont" )  %>
+          </div>
+          <div class="reward-info">
+            <span>Rewards</span>
+            <div class="reward-desc">
+            <% @project.rewards.each do |reward| %>
+              <p class="reward-title"><%= reward.title %></p>
+              <p class="reward-body"><%= reward.details %> You will get this when you pledge <%= reward.minimum_amount %> or above.</p>
+            <% end %>
+             
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" style="">
+    <span style="color: #fff;font-size: 15px;">
+    <a>About Us</a> | <a>Terms and Conditions</a> | Copyright 2015
+    </span>
+  </footer>
+  <script src="assets/jquery.js"></script>  
+    <!-- Bootstrap Core JavaScript -->
+    <script src="assets/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#nav-tabs li a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
+    });
+  </script>
+</body>
+</html>
